@@ -1,0 +1,9 @@
+{
+    "name": "Stopwatch Extension",
+    "description": "A stopwatch extension for Chrome",
+    "version": "1.0",
+    "manifest_version": 3,
+    "action": {
+      "default_popup": "popup.html"
+    }
+  }
