@@ -1,0 +1,41 @@
+enum StopwatchState {
+    on,
+    off
+}
+
+class Stopwatch {
+    private startTime: number;
+    private accruedTimeDelta: number;
+    private state: StopwatchState;
+    
+    constructor() {
+        this.startTime = 0;         //stores the time the stopwatch entered the on state (irrevelant when off)
+        this.accruedTimeDelta = 0;  //stores the total time that was previously present on the stopwatch (prior to most recent start)
+        this.state = StopwatchState.off;
+    }
+
+    public start(): void {
+      this.startTime = Date.now();
+      this.state = StopwatchState.on;
+    }
+  
+    public stop(): void {
+      this.accruedTimeDelta = this.getElapsedTime();
+      this.startTime = 0;
+      this.state = StopwatchState.off;
+    }
+
+    public reset(): void {
+        this.startTime = 0;
+        this.accruedTimeDelta = 0;
+        this.state = StopwatchState.off;
+    }
+
+    public getElapsedTime(): number {
+        return this.accruedTimeDelta + Date.now() - this.startTime;
+    }
+
+    public getState(): StopwatchState {
+        return this.state;
+    }
+}

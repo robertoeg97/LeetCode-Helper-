@@ -2,43 +2,44 @@ const startStopButton = document.getElementById("startStopButton") as HTMLButton
 const resetButton = document.getElementById("resetButton") as HTMLButtonElement;
 const timerDisplay = document.querySelector(".timer") as HTMLDivElement;
 
-let startTime: number | null = null;
-let elapsedTime = 0;
-let intervalId: number | null = null;
+let stopwatch: Stopwatch = new Stopwatch();
 
-function startStopTimer() {
-  if (intervalId) {
-    clearInterval(intervalId);
-    intervalId = null;
-    startStopButton.textContent = "Start";
+let intervalId: number; 
+
+function startStopwatch() {
+  const updateRate: number = 10;    //update rate (ms)
+  stopwatch.start();
+  intervalId = setInterval(updateTimerDisplay, updateRate);  
+  startStopButton.textContent = "Stop";
+}
+
+function stopStopwatch() {
+  stopwatch.stop();
+  clearInterval(intervalId);   //stop updating timer display (time is unchanging)          
+  startStopButton.textContent = "Start";
+}
+
+function changeStopwatchState() {
+  if (stopwatch.getState() === StopwatchState.off) {     
+    startStopwatch();
   } else {
-    startTime = Date.now();
-    intervalId = setInterval(updateTimerDisplay, 10);
-    startStopButton.textContent = "Stop";
+    stopStopwatch();
   }
-}
-
-function resetTimer() {
-  startTime = null;
-  elapsedTime = 0;
-  updateTimerDisplay();
-}
-
-function updateTimerDisplay() {
-  if (!startTime) {
-    timerDisplay.textContent = "00:00:00";
-    return;
-  }
-  const elapsedMilliseconds = elapsedTime + (Date.now() - startTime);
-  const hours = Math.floor(elapsedMilliseconds / 3600000);
-  const minutes = Math.floor((elapsedMilliseconds % 3600000) / 60000);
-  const seconds = Math.floor((elapsedMilliseconds % 60000) / 1000);
-  const milliseconds = Math.floor(elapsedMilliseconds % 1000 / 10);
-  timerDisplay.textContent = `${padZero(hours)}:${padZero(minutes)}:${padZero(seconds)}.${padZero(milliseconds)}`;
 }
 
 function padZero(num: number) : string {
   return (num as any).toString().padStart(2, "0");
 }
 
-startStopButton.addEventListener("click", startStopTimer);
+function updateTimerDisplay() {
+  const totalElapsedMilliseconds: number = stopwatch.getElapsedTime();
+  const hours: number = Math.floor(totalElapsedMilliseconds / 3600000);
+  const minutes: number = Math.floor((totalElapsedMilliseconds % 3600000) / 60000);
+  const seconds:number = Math.floor((totalElapsedMilliseconds % 60000) / 1000);
+  const milliseconds: number = Math.floor(totalElapsedMilliseconds % 1000 / 10);
+  timerDisplay.textContent = `${padZero(hours)}:${padZero(minutes)}:${padZero(seconds)}.${padZero(milliseconds)}`;
+}
+
+startStopButton.addEventListener("click", changeStopwatchState);
+
+resetButton.addEventListener("click", stopwatch.reset);
