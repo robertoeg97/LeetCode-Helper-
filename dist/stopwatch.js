@@ -25,7 +25,12 @@ class Stopwatch {
         this.state = StopwatchState.off;
     }
     getElapsedTime() {
-        return this.accruedTimeDelta + Date.now() - this.startTime;
+        if (this.state === StopwatchState.on) {
+            return this.accruedTimeDelta + Date.now() - this.startTime;
+        }
+        else {
+            return this.accruedTimeDelta;
+        }
     }
     getState() {
         return this.state;

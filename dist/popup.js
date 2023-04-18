@@ -15,13 +15,17 @@ function stopStopwatch() {
     clearInterval(intervalId); //stop updating timer display (time is unchanging)          
     startStopButton.textContent = "Start";
 }
-function changeStopwatchState() {
+function toggleStopwatchState() {
     if (stopwatch.getState() === StopwatchState.off) {
         startStopwatch();
     }
     else {
         stopStopwatch();
     }
+}
+function resetStopwatch() {
+    stopwatch.reset();
+    startStopButton.textContent = "Start";
 }
 function padZero(num) {
     return num.toString().padStart(2, "0");
@@ -34,6 +38,6 @@ function updateTimerDisplay() {
     const milliseconds = Math.floor(totalElapsedMilliseconds % 1000 / 10);
     timerDisplay.textContent = `${padZero(hours)}:${padZero(minutes)}:${padZero(seconds)}.${padZero(milliseconds)}`;
 }
-startStopButton.addEventListener("click", changeStopwatchState);
-resetButton.addEventListener("click", stopwatch.reset);
+startStopButton.addEventListener("click", toggleStopwatchState);
+resetButton.addEventListener("click", resetStopwatch);
 //# sourceMappingURL=popup.js.map

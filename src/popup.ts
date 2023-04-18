@@ -19,12 +19,17 @@ function stopStopwatch() {
   startStopButton.textContent = "Start";
 }
 
-function changeStopwatchState() {
+function toggleStopwatchState() {
   if (stopwatch.getState() === StopwatchState.off) {     
     startStopwatch();
   } else {
     stopStopwatch();
   }
+}
+
+function resetStopwatch() {
+  stopwatch.reset();
+  startStopButton.textContent = "Start";
 }
 
 function padZero(num: number) : string {
@@ -40,6 +45,6 @@ function updateTimerDisplay() {
   timerDisplay.textContent = `${padZero(hours)}:${padZero(minutes)}:${padZero(seconds)}.${padZero(milliseconds)}`;
 }
 
-startStopButton.addEventListener("click", changeStopwatchState);
+startStopButton.addEventListener("click", toggleStopwatchState);
 
-resetButton.addEventListener("click", stopwatch.reset);
+resetButton.addEventListener("click", resetStopwatch);
