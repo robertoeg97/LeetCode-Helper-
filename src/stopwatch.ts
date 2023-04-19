@@ -15,14 +15,18 @@ class Stopwatch {
     }
 
     public start(): void {
-      this.startTime = Date.now();
-      this.state = StopwatchState.on;
+        if (this.state == StopwatchState.off) {
+            this.startTime = Date.now();
+            this.state = StopwatchState.on;
+        }
     }
   
     public stop(): void {
-      this.accruedTimeDelta = this.getElapsedTime();
-      this.startTime = 0;
-      this.state = StopwatchState.off;
+        if (this.state == StopwatchState.on) {
+            this.accruedTimeDelta = this.getElapsedTime();
+            this.startTime = 0;
+            this.state = StopwatchState.off;
+        }
     }
 
     public reset(): void {
