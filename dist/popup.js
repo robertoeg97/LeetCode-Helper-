@@ -2,8 +2,12 @@
 const startStopButton = document.getElementById("startStopButton");
 const resetButton = document.getElementById("resetButton");
 const timerDisplay = document.querySelector(".timer");
-let stopwatch = new Stopwatch();
 let intervalId;
+let stopwatch = new Stopwatch();
+/* let stopwatch: Stopwatch;
+chrome.storage.session.get("stopwatch", function(data) {
+  stopwatch = data.stopwatch;
+}); */
 function startStopwatch() {
     const updateRate = 10; //update rate (ms)
     stopwatch.start();
@@ -25,6 +29,7 @@ function toggleStopwatchState() {
 }
 function resetStopwatch() {
     stopwatch.reset();
+    updateTimerDisplay();
     startStopButton.textContent = "Start";
 }
 function padZero(num) {
@@ -40,4 +45,6 @@ function updateTimerDisplay() {
 }
 startStopButton.addEventListener("click", toggleStopwatchState);
 resetButton.addEventListener("click", resetStopwatch);
+//we start the stopwatch when the popup opens
+startStopwatch();
 //# sourceMappingURL=popup.js.map
