@@ -11,6 +11,7 @@ const timerDisplay = document.querySelector("#timerDisplay") as HTMLDivElement;
  */
 let stopwatch: Stopwatch;
 async function initPopup() {
+  //get stopwatch from storage
   stopwatch = await Stopwatch.getStopwatch();
   //sets all values in the popup to correctly match the state of the stopwatch 
   if (stopwatch.getState() == StopwatchState.on) {
@@ -19,6 +20,7 @@ async function initPopup() {
   else {
     stopStopwatch();
   }
+  //begin regularly updating the popup stopwatch time display
   const updateRate = 10;    //update rate (ms)
   setInterval(updateTimerDisplay, updateRate);  
 }
