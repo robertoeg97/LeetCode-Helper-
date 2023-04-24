@@ -7,10 +7,20 @@ const timerDisplay = document.querySelector("#timerDisplay") as HTMLDivElement;
 
 let intervalId: NodeJS.Timer; 
 
-let stopwatch : Stopwatch = new Stopwatch();
+let stopwatch: Stopwatch;
+async function initPopup() {
+  stopwatch = await Stopwatch.getStopwatch();
+  if (stopwatch.getState() == StopwatchState.on) {
+    startStopwatch();
+  }
+  else {
+    stopStopwatch();
+  }
+}
+initPopup();
 
 function startStopwatch() {
-  const updateRate: number = 10;    //update rate (ms)
+  const updateRate = 10;    //update rate (ms)
   stopwatch.start();
   intervalId = setInterval(updateTimerDisplay, updateRate);  
   startStopButton.textContent = "Stop";
@@ -18,7 +28,8 @@ function startStopwatch() {
 
 function stopStopwatch() {
   stopwatch.stop();
-  clearInterval(intervalId);   //stop updating timer display (time is unchanging)          
+  updateTimerDisplay();
+  clearInterval(intervalId);   //stop updating timer display        
   startStopButton.textContent = "Start";
 }
 
@@ -36,8 +47,9 @@ function resetStopwatch() {
   startStopButton.textContent = "Start";
 }
 
+
 function padZero(num: number) : string {
-  return (num as any).toString().padStart(2, "0");
+  return num.toString().padStart(2, "0");
 }
 
 function updateTimerDisplay() {
@@ -52,12 +64,3 @@ function updateTimerDisplay() {
 startStopButton.addEventListener("click", toggleStopwatchState);
 
 resetButton.addEventListener("click", resetStopwatch);
-
-//we start the stopwatch when the popup opens
-startStopwatch();
-
-
-
-/* document.getElementById('go-to-options').addEventListener('click', () => {
-  chrome.runtime.openOptionsPage();
-}); */

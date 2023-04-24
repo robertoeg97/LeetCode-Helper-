@@ -1,5 +1,9 @@
 // Define your storage data here
-export interface Storage {} // eslint-disable-line
+import { Stopwatch } from './stopwatch';
+
+export interface Storage {
+  stopwatch : Stopwatch;
+} 
 
 export function getStorageData(): Promise<Storage> {
   return new Promise((resolve, reject) => {
