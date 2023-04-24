@@ -5,6 +5,12 @@ export enum StopwatchState {
     off
   }
 
+  /**
+   * a Stopwatch class to keep track of time.
+   * The state of the most recently created object is stored across multiple scripts.
+   * To make a new object, call Stopwatch.initStopwatch()
+   * To retrieve the most recently created object, call Stopwatch.getStopwatch()
+   */
 export class Stopwatch {
     private startTime: number;
     private accruedTimeDelta: number;
@@ -86,13 +92,21 @@ export class Stopwatch {
     static fromObj(obj : Stopwatch): Stopwatch {
         return new Stopwatch(obj.startTime, obj.accruedTimeDelta, obj.state);
     }
-    
+
+    /**
+     * Create a brand new stopwatch object, completely zeroed out.
+     * @returns a new stopwatch object
+     */
     static initStopwatch(): Stopwatch {
         const stopwatch: Stopwatch = new Stopwatch();
         setStorageItem('stopwatch', stopwatch);
         return stopwatch;
     }
 
+    /**
+     * Must have previously called Stopwatch.initStopwatch()
+     * @returns the last stopwatch object created by Stopwatch.initStopwatch()
+     */
     static async getStopwatch(): Promise<Stopwatch> {
         const stopwatchObj = await getStorageItem('stopwatch');
         return Stopwatch.fromObj(stopwatchObj);
