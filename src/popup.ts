@@ -5,34 +5,44 @@ const startStopButton = document.getElementById("startStopButton") as HTMLButton
 const resetButton = document.getElementById("resetButton") as HTMLButtonElement;
 const timerDisplay = document.querySelector("#timerDisplay") as HTMLDivElement;
 
-let intervalId: NodeJS.Timer; 
-
+/**
+ * initializes the stopwatch and the popup display
+ * sets a timer to update the displayed stopwatch time regularly
+ */
 let stopwatch: Stopwatch;
 async function initPopup() {
   stopwatch = await Stopwatch.getStopwatch();
+  //sets all values in the popup to correctly match the state of the stopwatch 
   if (stopwatch.getState() == StopwatchState.on) {
     startStopwatch();
   }
   else {
     stopStopwatch();
   }
+  const updateRate = 10;    //update rate (ms)
+  setInterval(updateTimerDisplay, updateRate);  
 }
 initPopup();
 
+/**
+ * turns the stopwatch on, updates the popup accordingly
+ */
 function startStopwatch() {
-  const updateRate = 10;    //update rate (ms)
   stopwatch.start();
-  intervalId = setInterval(updateTimerDisplay, updateRate);  
   startStopButton.textContent = "Stop";
 }
 
+/**
+ * turns the stopwatch off, updates the popup accordingly
+ */
 function stopStopwatch() {
-  stopwatch.stop();
-  updateTimerDisplay();
-  clearInterval(intervalId);   //stop updating timer display        
+  stopwatch.stop();    
   startStopButton.textContent = "Start";
 }
 
+/**
+ * switches between the stopwatch's on and off state
+ */
 function toggleStopwatchState() {
   if (stopwatch.getState() === StopwatchState.off) {     
     startStopwatch();
@@ -41,17 +51,27 @@ function toggleStopwatchState() {
   }
 }
 
+/**
+ * turns the stopwatch off, sets its time to 0 
+ * and updates the popup accordingly
+ */
 function resetStopwatch() {
   stopwatch.reset();
-  updateTimerDisplay();
   startStopButton.textContent = "Start";
 }
 
-
+/**
+ * pads zeroes to the front of a given number
+ * @param num a number between 0 and 99
+ * @returns the 2-digit string of the number, with leading zeroes
+ */
 function padZero(num: number) : string {
   return num.toString().padStart(2, "0");
 }
 
+/**
+ * sets the time on the popup display to whatever the corresponding time of the stopwatch is
+ */
 function updateTimerDisplay() {
   const totalElapsedMilliseconds: number = stopwatch.getElapsedTime();
   const hours: number = Math.floor(totalElapsedMilliseconds / 3600000);
@@ -61,6 +81,8 @@ function updateTimerDisplay() {
   timerDisplay.textContent = `${padZero(hours)}:${padZero(minutes)}:${padZero(seconds)}.${padZero(milliseconds)}`;
 }
 
+//switches between on/off when the user presses the start/stop button
 startStopButton.addEventListener("click", toggleStopwatchState);
 
+//resetts the stopwatch whenever the user presses the reset button
 resetButton.addEventListener("click", resetStopwatch);

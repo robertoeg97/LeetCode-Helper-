@@ -1,13 +1,10 @@
-import { initializeStorageWithDefaults, getStorageItem } from './storage';
 import { Stopwatch } from './stopwatch';
 
 chrome.runtime.onInstalled.addListener(async () => {
   // Here goes everything you want to execute after extension initialization
 
-  const defaultStorageData = { stopwatch : new Stopwatch() };
-  await initializeStorageWithDefaults(defaultStorageData);
-
-  console.log('Extension successfully installed!');
+  //create a new stopwatch object that will be interacted with through the popup
+  Stopwatch.initStopwatch();
 });
 
 // Log storage changes, might be safely removed
