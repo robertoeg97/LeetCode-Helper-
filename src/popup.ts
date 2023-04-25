@@ -89,9 +89,13 @@ startStopButton.addEventListener("click", toggleStopwatchState);
 //resetts the stopwatch whenever the user presses the reset button
 resetButton.addEventListener("click", resetStopwatch);
 
-//sends a message to the content script of the active tab, saying the chatGPTButton was pressed
+//sends a message to the content script of the active tab, saying the Ask chatGPT Button was pressed
 document.getElementById('chatGPTButton').addEventListener('click', () => {
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-    chrome.tabs.sendMessage(tabs[0].id, { action: 'chatGPT' });
+    const currentTab: chrome.tabs.Tab = tabs[0];
+    //send message to contentScript if we are actually on a leetcode problem
+    if (currentTab && currentTab.url.startsWith('https://leetcode.com/problems/')) {
+      chrome.tabs.sendMessage(currentTab.id, { action: 'chatGPT' });
+    }
   });
 });
