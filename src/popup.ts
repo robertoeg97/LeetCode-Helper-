@@ -88,3 +88,10 @@ startStopButton.addEventListener("click", toggleStopwatchState);
 
 //resetts the stopwatch whenever the user presses the reset button
 resetButton.addEventListener("click", resetStopwatch);
+
+//sends a message to the content script of the active tab, saying the chatGPTButton was pressed
+document.getElementById('chatGPTButton').addEventListener('click', () => {
+  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+    chrome.tabs.sendMessage(tabs[0].id, { action: 'chatGPT' });
+  });
+});

@@ -28,7 +28,12 @@ button {
   cursor: pointer;
 }
 
-.buttons {
+.stopwatchButtons {
+  display: flex;
+  justify-content: center;
+}
+
+.chatGPTButtons {
   display: flex;
   justify-content: center;
 }
