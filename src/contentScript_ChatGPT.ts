@@ -23,7 +23,7 @@ function getAnswer(problemText: string) {
     }, 50);  
 }
 
-async function onStartup() {
+async function onStartup(): Promise<void> {
     const problemText: string = await getProblemText();
     //only submit the text if a problem has been stored (occurs when this page is opened via contentScript_Leetcode)
     if (problemText !== '') {
