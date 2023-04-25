@@ -1,4 +1,5 @@
 import { setStorageItem } from './Storage';
+import { Stopwatch} from './stopwatch';
 
 function getProgrammingLanguage(): string {
   const divElement = document.querySelector('div.h-full.w-full[data-mode-id]');
@@ -20,6 +21,17 @@ function openChatGPT(): void {
   // Open a new tab to chat.openai.com
   window.open('https://chat.openai.com', '_blank');
 }
+
+/**
+ * resetting and starting the stopwatch every time a new problem is loaded
+ */
+let stopwatch: Stopwatch;
+async function onStartup(): Promise<void> {
+  stopwatch = await Stopwatch.getStopwatch();
+  stopwatch.reset();
+  stopwatch.start();
+}
+onStartup();
 
 //user requested help from chatGPT
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
