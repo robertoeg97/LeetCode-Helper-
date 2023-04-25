@@ -1,7 +1,7 @@
 boilerplate project source code: https://github.com/sszczep/chrome-extension-webpack
 
 
-## Overview
+### Features
 
 Chrome browser extension designed to assist with practicing problems on leetcode.com.
 Includes a stopwatch used to help pacing when working on practice problems.
