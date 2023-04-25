@@ -10,6 +10,7 @@ async function getProblemText(): Promise<string> {
 
 function getAnswer(problemText: string) {
     //wait for the page to load
+    const pageLoadWaitTime = 50; //(ms)
     setTimeout(() => {
         const textBox = window.document.querySelector('textarea[data-id="root"]') as HTMLTextAreaElement;
         // paste the problem text 
@@ -20,7 +21,7 @@ function getAnswer(problemText: string) {
         //submit the text
         const submitButton = document.querySelector('button.absolute') as HTMLButtonElement;
         submitButton.click();                 
-    }, 50);  
+    }, pageLoadWaitTime);  
 }
 
 async function onStartup(): Promise<void> {
