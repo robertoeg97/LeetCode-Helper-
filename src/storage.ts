@@ -3,6 +3,7 @@ import { Stopwatch } from './stopwatch';
 
 export interface Storage {
   stopwatch : Stopwatch;
+  problemText: string;
 } 
 
 export function getStorageData(): Promise<Storage> {
