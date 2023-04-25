@@ -21,7 +21,7 @@ async function initPopup() {
     stopStopwatch();
   }
   //begin regularly updating the popup stopwatch time display
-  const updateRate = 10;    //update rate (ms)
+  const updateRate = 10;  // (ms)
   setInterval(updateTimerDisplay, updateRate);  
 }
 initPopup();
