@@ -1,4 +1,4 @@
-import { setStorageItem } from './Storage';
+import { setStorageItem } from './storage';
 import { Stopwatch} from './stopwatch';
 
 function getProgrammingLanguage(): string {
@@ -34,7 +34,7 @@ async function onStartup(): Promise<void> {
 onStartup();
 
 //user requested help from chatGPT
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+chrome.runtime.onMessage.addListener((message) => {
   if (message.action === 'chatGPT') {
     saveProblem();
     openChatGPT();

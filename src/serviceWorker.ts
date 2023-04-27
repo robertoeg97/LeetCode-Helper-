@@ -1,5 +1,5 @@
 import { Stopwatch } from './stopwatch';
-import { setStorageItem } from './Storage';
+import { setStorageItem } from './storage';
 
 chrome.runtime.onInstalled.addListener(async () => {
   // Here goes everything you want to execute after extension initialization

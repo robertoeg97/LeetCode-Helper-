@@ -1,4 +1,4 @@
-import { setStorageItem, getStorageItem } from './Storage';
+import { setStorageItem, getStorageItem } from './storage';
 
 async function getProblemText(): Promise<string> {
     //find problem text
